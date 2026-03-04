@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Data & Design Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --teal: #1a6b6b;
+    --teal-light: #2a9d8f;
+    --rust: #c94a2a;
+    --mist: #e8ede8;
+    --mid: #6b7280;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--gold);
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 48px 80px 80px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 5.5vw, 88px);
+    line-height: 1.0;
+    margin-bottom: 28px;
+    letter-spacing: -1px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.6);
+    max-width: 400px;
+    margin-bottom: 48px;
+  }
+
+  .hero-ctas { display: flex; gap: 16px; align-items: center; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 14px 32px;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.2s;
+    cursor: none;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-ghost {
+    border: 1px solid rgba(245,240,232,0.3);
+    color: var(--cream);
+    padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 400;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: none;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* GEOMETRIC VISUAL — right side */
+  .hero-visual {
+    position: relative;
+    width: 480px; height: 520px;
+  }
+  .vis-card {
+    position: absolute;
+    border-radius: 2px;
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+  }
+  .vis-card:nth-child(2) { animation-delay: -2s; }
+  .vis-card:nth-child(3) { animation-delay: -4s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* STATS BAR */
+  .stats {
+    display: flex; gap: 0;
+    border-top: 1px solid rgba(245,240,232,0.1);
+    border-bottom: 1px solid rgba(245,240,232,0.1);
+    margin-top: 60px;
+  }
+  .stat-item {
+    flex: 1;
+    padding: 28px 48px;
+    border-right: 1px solid rgba(245,240,232,0.1);
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+  .stat-item:nth-child(1) { animation-delay: 0.2s; }
+  .stat-item:nth-child(2) { animation-delay: 0.35s; }
+  .stat-item:nth-child(3) { animation-delay: 0.5s; }
+  .stat-item:nth-child(4) { animation-delay: 0.65s; animation: fadeUp 0.6s ease 0.65s forwards; border-right: none; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    margin-top: 4px;
+    display: block;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASICS */
+  section { padding: 100px 80px; }
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-tag::before {
+    content: '';
+    display: block; width: 24px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 60px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* SERVICES */
+  #services { background: var(--ink); }
+  .services-intro {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; margin-bottom: 64px;
+    align-items: end;
+  }
+  .services-desc {
+    font-size: 15px; line-height: 1.8;
+    color: rgba(245,240,232,0.6);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(245,240,232,0.08);
+  }
+  .service-card {
+    background: var(--ink);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .service-card:hover { background: rgba(201,168,76,0.04); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .service-icon svg { width: 100%; height: 100%; }
+
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: rgba(201,168,76,0.08);
+    position: absolute; top: 12px; right: 20px;
+    line-height: 1;
+    transition: color 0.3s;
+  }
+  .service-card:hover .service-num { color: rgba(201,168,76,0.15); }
+
+  .service-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .service-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.5);
+  }
+  .service-tools {
+    margin-top: 20px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .tool-tag {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+  }
+
+  /* PORTFOLIO */
+  #work { background: #080810; }
+  .work-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 56px;
+  }
+
+  .filter-tabs { display: flex; gap: 4px; }
+  .filter-tab {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 8px 18px; border: 1px solid rgba(245,240,232,0.15);
+    background: none; color: rgba(245,240,232,0.5);
+    cursor: none; transition: all 0.2s;
+  }
+  .filter-tab.active, .filter-tab:hover {
+    border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 240px;
+    gap: 16px;
+  }
+
+  .port-item {
+    position: relative; overflow: hidden;
+    border-radius: 2px;
+    cursor: none;
+  }
+  .port-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+  .port-item:nth-child(2) { grid-column: span 5; }
+  .port-item:nth-child(3) { grid-column: span 5; }
+  .port-item:nth-child(4) { grid-column: span 4; grid-row: span 2; }
+  .port-item:nth-child(5) { grid-column: span 4; }
+  .port-item:nth-child(6) { grid-column: span 4; }
+
+  .port-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .port-item:hover .port-bg { transform: scale(1.05); }
+
+  /* Portfolio item backgrounds — data visualizations */
+  .bg-1 { background: linear-gradient(135deg, #0d2b45 0%, #1a6b6b 50%, #0d3320 100%); }
+  .bg-2 { background: linear-gradient(135deg, #2d1b00 0%, #8b4513 60%, #c94a2a 100%); }
+  .bg-3 { background: linear-gradient(135deg, #1a0d2e 0%, #4a1272 60%, #c94a2a 100%); }
+  .bg-4 { background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #2a7d9a 100%); }
+  .bg-5 { background: linear-gradient(135deg, #1a2800 0%, #2a5c0a 60%, #5a9c1a 100%); }
+  .bg-6 { background: linear-gradient(135deg, #280a00 0%, #6b1a0a 60%, #c94a2a 100%); }
+
+  .port-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.1) 60%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 28px;
+    opacity: 0; transition: opacity 0.35s;
+  }
+  .port-item:hover .port-overlay { opacity: 1; }
+
+  .port-label {
+    font-size: 10px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .port-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; margin-bottom: 8px;
+  }
+  .port-desc { font-size: 12px; color: rgba(245,240,232,0.6); line-height: 1.5; }
+
+  /* Decorative chart elements inside portfolio cards */
+  .chart-decoration {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+
+  /* Bar chart deco */
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 100%; padding: 32px 20px; }
+  .bar {
+    flex: 1; border-radius: 2px 2px 0 0;
+    opacity: 0.55;
+    animation: barGrow 1.5s ease forwards;
+    transform-origin: bottom;
+  }
+  @keyframes barGrow {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+
+  /* Line chart deco */
+  .line-chart-svg { width: 100%; height: 100%; opacity: 0.5; }
+
+  /* Donut chart deco */
+  .donut-wrap { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+
+  /* Map/scatter deco */
+  .scatter-dots { position: absolute; inset: 0; }
+  .dot {
+    position: absolute; border-radius: 50%;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.3); }
+  }
+
+  /* PROCESS */
+  #process { background: var(--ink); }
+  .process-layout {
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 80px; align-items: start;
+    margin-top: 48px;
+  }
+  .process-steps { display: flex; flex-direction: column; gap: 0; }
+  .process-step {
+    display: flex; gap: 24px;
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(245,240,232,0.08);
+    position: relative;
+    transition: all 0.3s;
+  }
+  .process-step:hover .step-num { color: var(--gold); }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; color: rgba(245,240,232,0.12);
+    line-height: 1; min-width: 52px;
+    transition: color 0.3s;
+  }
+  .step-content {}
+  .step-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; margin-bottom: 8px;
+  }
+  .step-desc {
+    font-size: 13px; line-height: 1.7;
+    color: rgba(245,240,232,0.5);
+  }
+
+  .process-visual {
+    position: sticky; top: 120px;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 48px;
+    display: flex; flex-direction: column;
+    gap: 20px;
+  }
+
+  .skill-bar-row { }
+  .skill-name {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(245,240,232,0.6); margin-bottom: 8px;
+    display: flex; justify-content: space-between;
+  }
+  .skill-name span { color: var(--gold); }
+  .skill-track {
+    height: 3px; background: rgba(245,240,232,0.08);
+    border-radius: 2px; overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(to right, var(--teal), var(--gold));
+    animation: fillBar 1.8s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+    transform-origin: left;
+  }
+  @keyframes fillBar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* TESTIMONIALS */
+  #testimonials { background: #080810; }
+  .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+  .testi-card {
+    border: 1px solid rgba(245,240,232,0.08);
+    padding: 36px;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .testi-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-4px); }
+  .testi-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 64px; line-height: 0.6;
+    color: var(--gold); opacity: 0.3;
+    margin-bottom: 12px;
+  }
+  .testi-text {
+    font-size: 14px; line-height: 1.8;
+    color: rgba(245,240,232,0.7);
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+  .testi-client { display: flex; align-items: center; gap: 14px; }
+  .client-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+    color: var(--ink);
+  }
+  .client-name { font-size: 13px; font-weight: 500; }
+  .client-role { font-size: 11px; color: rgba(245,240,232,0.4); letter-spacing: 1px; }
+  .testi-stars { color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+
+  /* CONTACT */
+  #contact {
+    background: var(--ink);
+    position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: 'CONNECT';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 12vw, 180px);
+    color: rgba(201,168,76,0.04);
+    position: absolute; bottom: -20px; right: -20px;
+    line-height: 1; pointer-events: none;
+  }
+
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .contact-info {}
+  .contact-desc {
+    font-size: 15px; line-height: 1.8;
+    color: rgba(245,240,232,0.6);
+    margin-top: 24px; margin-bottom: 40px;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 16px;
+    font-size: 13px; color: rgba(245,240,232,0.6);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--gold); }
+  .contact-link-icon {
+    width: 36px; height: 36px; border: 1px solid rgba(245,240,232,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover .contact-link-icon { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,240,232,0.4); }
+  .form-input, .form-textarea {
+    background: rgba(245,240,232,0.04);
+    border: 1px solid rgba(245,240,232,0.12);
+    padding: 14px 16px;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.04);
+  }
+  .form-textarea { height: 120px; resize: none; }
+
+  /* FOOTER */
+  footer {
+    background: #050508;
+    padding: 32px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(245,240,232,0.06);
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; letter-spacing: 3px; color: var(--gold);
+  }
+  .footer-copy { font-size: 11px; color: rgba(245,240,232,0.3); letter-spacing: 1px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 11px; color: rgba(245,240,232,0.3); text-decoration: none; letter-spacing: 1px; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* AVAILABLE BADGE */
+  .available-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: #4ade80; margin-bottom: 20px;
+  }
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px #4ade80; }
+    50% { opacity: 0.3; box-shadow: none; }
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden; border-top: 1px solid rgba(245,240,232,0.06);
+    border-bottom: 1px solid rgba(245,240,232,0.06);
+    padding: 16px 0; background: rgba(201,168,76,0.03);
+  }
+  .marquee-track {
+    display: flex; gap: 48px; white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px; letter-spacing: 3px; color: rgba(245,240,232,0.25);
+    flex-shrink: 0;
+  }
+  .marquee-dot { color: var(--gold); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* HERO HERO BG NOISE */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.4;
+  }
+
+  /* GRID BG */
+  .hero-left::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: -1;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    section { padding: 60px 24px; }
+    .services-intro { grid-template-columns: 1fr; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .port-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .process-layout { grid-template-columns: 1fr; }
+    .stats { flex-direction: column; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .hero-left { padding: 100px 24px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">DATADESIGN&nbsp;&nbsp;/&nbsp;&nbsp;PRO</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="available-badge">
+      <span class="badge-dot"></span>
+      Available for new projects
+    </div>
+    <div class="hero-tag">Data &amp; Design Specialist</div>
+    <h1 class="hero-title">
+      Where Data<br>Becomes<br><em>Insight.</em>
+    </h1>
+    <p class="hero-sub">
+      I transform complex, messy data into structured, meaningful intelligence — and bring it to life through stunning dashboards and impactful visual design.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-ghost">Let's Collaborate</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-visual">
+
+      <!-- Card 1: Dashboard mockup -->
+      <div class="vis-card" style="top:40px;left:20px;width:280px;height:180px;background:rgba(26,107,107,0.15);border:1px solid rgba(42,157,143,0.3);">
+        <svg viewBox="0 0 280 180" style="width:100%;height:100%">
+          <!-- Mini dashboard UI -->
+          <rect x="12" y="12" width="80" height="8" rx="2" fill="rgba(201,168,76,0.6)"/>
+          <rect x="12" y="26" width="50" height="4" rx="2" fill="rgba(245,240,232,0.15)"/>
+          <!-- KPI boxes -->
+          <rect x="12" y="44" width="58" height="42" rx="3" fill="rgba(42,157,143,0.2)" stroke="rgba(42,157,143,0.4)" stroke-width="1"/>
+          <rect x="80" y="44" width="58" height="42" rx="3" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <rect x="148" y="44" width="58" height="42" rx="3" fill="rgba(201,74,42,0.15)" stroke="rgba(201,74,42,0.4)" stroke-width="1"/>
+          <!-- KPI numbers -->
+          <text x="41" y="68" text-anchor="middle" fill="rgba(42,157,143,0.9)" font-size="14" font-weight="bold">94%</text>
+          <text x="109" y="68" text-anchor="middle" fill="rgba(201,168,76,0.9)" font-size="14" font-weight="bold">$2.4M</text>
+          <text x="177" y="68" text-anchor="middle" fill="rgba(201,74,42,0.9)" font-size="14" font-weight="bold">↑18%</text>
+          <!-- Bar chart -->
+          <rect x="12" y="100" width="8" height="60" rx="1" fill="rgba(42,157,143,0.6)"/>
+          <rect x="24" y="115" width="8" height="45" rx="1" fill="rgba(42,157,143,0.4)"/>
+          <rect x="36" y="108" width="8" height="52" rx="1" fill="rgba(42,157,143,0.7)"/>
+          <rect x="48" y="90" width="8" height="70" rx="1" fill="rgba(201,168,76,0.7)"/>
+          <rect x="60" y="100" width="8" height="60" rx="1" fill="rgba(42,157,143,0.5)"/>
+          <rect x="72" y="82" width="8" height="78" rx="1" fill="rgba(201,168,76,0.8)"/>
+          <rect x="84" y="95" width="8" height="65" rx="1" fill="rgba(42,157,143,0.6)"/>
+          <!-- Line chart -->
+          <polyline points="110,155 125,135 140,145 155,110 170,120 185,95 200,105 215,88 230,95 245,75 260,82" fill="none" stroke="rgba(201,168,76,0.7)" stroke-width="2"/>
+          <circle cx="260" cy="82" r="4" fill="rgba(201,168,76,0.9)"/>
+          <!-- Donut placeholder -->
+          <circle cx="248" cy="65" r="24" fill="none" stroke="rgba(42,157,143,0.2)" stroke-width="8"/>
+          <circle cx="248" cy="65" r="24" fill="none" stroke="rgba(201,168,76,0.7)" stroke-width="8" stroke-dasharray="90 60" stroke-dashoffset="-10"/>
+          <circle cx="248" cy="65" r="24" fill="none" stroke="rgba(201,74,42,0.5)" stroke-width="8" stroke-dasharray="35 115" stroke-dashoffset="-100"/>
+        </svg>
+      </div>
+
+      <!-- Card 2: Table/Excel mockup -->
+      <div class="vis-card" style="top:200px;left:120px;width:300px;height:160px;background:rgba(10,20,40,0.9);border:1px solid rgba(201,168,76,0.2);">
+        <svg viewBox="0 0 300 160" style="width:100%;height:100%">
+          <!-- Header row -->
+          <rect x="0" y="0" width="300" height="28" fill="rgba(201,168,76,0.12)"/>
+          <text x="10" y="18" fill="rgba(201,168,76,0.8)" font-size="9" font-family="monospace">CATEGORY</text>
+          <text x="100" y="18" fill="rgba(201,168,76,0.8)" font-size="9" font-family="monospace">Q1</text>
+          <text x="150" y="18" fill="rgba(201,168,76,0.8)" font-size="9" font-family="monospace">Q2</text>
+          <text x="200" y="18" fill="rgba(201,168,76,0.8)" font-size="9" font-family="monospace">Q3</text>
+          <text x="250" y="18" fill="rgba(201,168,76,0.8)" font-size="9" font-family="monospace">YTD</text>
+          <!-- Data rows -->
+          <rect x="0" y="28" width="300" height="22" fill="rgba(245,240,232,0.02)"/>
+          <text x="10" y="43" fill="rgba(245,240,232,0.7)" font-size="9" font-family="monospace">Revenue</text>
+          <text x="100" y="43" fill="rgba(42,157,143,0.9)" font-size="9" font-family="monospace">$142K</text>
+          <text x="150" y="43" fill="rgba(42,157,143,0.9)" font-size="9" font-family="monospace">$198K</text>
+          <text x="200" y="43" fill="rgba(42,157,143,0.9)" font-size="9" font-family="monospace">$231K</text>
+          <text x="250" y="43" fill="rgba(201,168,76,0.9)" font-size="9" font-family="monospace" font-weight="bold">$571K</text>
+          <rect x="0" y="50" width="300" height="22" fill="rgba(245,240,232,0.04)"/>
+          <text x="10" y="65" fill="rgba(245,240,232,0.7)" font-size="9" font-family="monospace">Cost</text>
+          <text x="100" y="65" fill="rgba(201,74,42,0.8)" font-size="9" font-family="monospace">$84K</text>
+          <text x="150" y="65" fill="rgba(201,74,42,0.8)" font-size="9" font-family="monospace">$102K</text>
+          <text x="200" y="65" fill="rgba(201,74,42,0.8)" font-size="9" font-family="monospace">$118K</text>
+          <text x="250" y="65" fill="rgba(201,168,76,0.9)" font-size="9" font-family="monospace" font-weight="bold">$304K</text>
+          <rect x="0" y="72" width="300" height="22" fill="rgba(245,240,232,0.02)"/>
+          <text x="10" y="87" fill="rgba(245,240,232,0.7)" font-size="9" font-family="monospace">Margin</text>
+          <text x="100" y="87" fill="rgba(245,240,232,0.5)" font-size="9" font-family="monospace">40.8%</text>
+          <text x="150" y="87" fill="rgba(245,240,232,0.5)" font-size="9" font-family="monospace">48.5%</text>
+          <text x="200" y="87" fill="rgba(245,240,232,0.5)" font-size="9" font-family="monospace">48.9%</text>
+          <text x="250" y="87" fill="rgba(42,157,143,0.9)" font-size="9" font-family="monospace" font-weight="bold">46.8% ↑</text>
+          <!-- Sparkline area -->
+          <rect x="0" y="116" width="300" height="40" fill="rgba(201,168,76,0.03)"/>
+          <polyline points="10,148 50,135 90,140 130,120 170,128 210,110 250,115 290,95" fill="none" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+          <polyline points="10,148 50,135 90,140 130,120 170,128 210,110 250,115 290,95 290,148 10,148" fill="rgba(201,168,76,0.06)"/>
+          <text x="10" y="112" fill="rgba(245,240,232,0.3)" font-size="8" font-family="monospace">TREND →</text>
+        </svg>
+      </div>
+
+      <!-- Card 3: Canva design mockup -->
+      <div class="vis-card" style="top:60px;left:240px;width:180px;height:240px;background:linear-gradient(160deg,#1a2840,#2d1b4e);border:1px solid rgba(180,120,220,0.3);">
+        <svg viewBox="0 0 180 240" style="width:100%;height:100%">
+          <rect x="20" y="20" width="140" height="3" rx="1.5" fill="rgba(201,168,76,0.8)"/>
+          <rect x="20" y="32" width="90" height="2" rx="1" fill="rgba(245,240,232,0.2)"/>
+          <rect x="20" y="50" width="140" height="80" rx="4" fill="rgba(255,255,255,0.05)"/>
+          <!-- Logo mark inside -->
+          <circle cx="90" cy="90" r="28" fill="none" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+          <circle cx="90" cy="90" r="18" fill="rgba(201,168,76,0.15)"/>
+          <text x="90" y="95" text-anchor="middle" fill="rgba(201,168,76,0.9)" font-size="16" font-weight="bold">D²</text>
+          <!-- Color swatches -->
+          <rect x="20" y="148" width="20" height="20" rx="2" fill="#1a6b6b"/>
+          <rect x="46" y="148" width="20" height="20" rx="2" fill="#c9a84c"/>
+          <rect x="72" y="148" width="20" height="20" rx="2" fill="#c94a2a"/>
+          <rect x="98" y="148" width="20" height="20" rx="2" fill="#4a1272"/>
+          <rect x="124" y="148" width="20" height="20" rx="2" fill="rgba(245,240,232,0.15)"/>
+          <!-- Typography lines -->
+          <rect x="20" y="184" width="100" height="5" rx="2.5" fill="rgba(245,240,232,0.4)"/>
+          <rect x="20" y="196" width="140" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+          <rect x="20" y="206" width="120" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+          <rect x="20" y="216" width="80" height="3" rx="1.5" fill="rgba(245,240,232,0.1)"/>
+          <rect x="20" y="228" width="60" height="10" rx="2" fill="rgba(201,168,76,0.7)"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">EXCEL</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">GOOGLE SHEETS</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">POWER BI</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">LOOKER STUDIO</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">CANVA</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">PHOTOSHOP</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">DATA CLEANING</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">DASHBOARDS</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">VISUAL DESIGN</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">BRANDING</span><span class="marquee-dot"> ✦ </span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">EXCEL</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">GOOGLE SHEETS</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">POWER BI</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">LOOKER STUDIO</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">CANVA</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">PHOTOSHOP</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">DATA CLEANING</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">DASHBOARDS</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">VISUAL DESIGN</span><span class="marquee-dot"> ✦ </span>
+    <span class="marquee-item">BRANDING</span><span class="marquee-dot"> ✦ </span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <span class="stat-num">120+</span>
+    <span class="stat-label">Projects Delivered</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">98%</span>
+    <span class="stat-label">Client Satisfaction</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">5yr</span>
+    <span class="stat-label">Industry Experience</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">48h</span>
+    <span class="stat-label">Avg. Turnaround</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-intro">
+    <div>
+      <div class="section-tag reveal">What I Do</div>
+      <h2 class="section-title reveal">Precision <em>services</em><br>that drive results.</h2>
+    </div>
+    <p class="services-desc reveal">
+      From raw, inconsistent spreadsheets to executive-ready dashboards — I handle every step with meticulous attention to detail. Every deliverable is built to inform decisions, impress stakeholders, and scale with your business.
+    </p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="4" y="4" width="40" height="40" rx="3" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <path d="M4 16h40M16 4v40" stroke="rgba(201,168,76,0.4)" stroke-width="1"/>
+          <path d="M20 30l5-8 4 5 4-10" stroke="rgba(42,157,143,0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="33" cy="22" r="2" fill="rgba(201,168,76,0.8)"/>
+        </svg>
+      </div>
+      <div class="service-name">Data Cleaning & Structuring</div>
+      <div class="service-desc">Transform messy, inconsistent, duplicate-filled data into clean, structured datasets ready for analysis. I handle missing values, formatting issues, outliers, and data type corrections.</div>
+      <div class="service-tools">
+        <span class="tool-tag">Excel</span>
+        <span class="tool-tag">Google Sheets</span>
+        <span class="tool-tag">Power Query</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="28" width="8" height="14" rx="1" fill="rgba(42,157,143,0.6)"/>
+          <rect x="20" y="20" width="8" height="22" rx="1" fill="rgba(201,168,76,0.6)"/>
+          <rect x="34" y="12" width="8" height="30" rx="1" fill="rgba(201,74,42,0.6)"/>
+          <path d="M4 44h40" stroke="rgba(245,240,232,0.2)" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="service-name">Interactive Dashboards</div>
+      <div class="service-desc">Dynamic, executive-ready dashboards that turn your data into real-time insights. Built with filters, drill-downs, and KPIs that empower faster, smarter decisions.</div>
+      <div class="service-tools">
+        <span class="tool-tag">Power BI</span>
+        <span class="tool-tag">Looker Studio</span>
+        <span class="tool-tag">Excel</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="18" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+          <path d="M24 6 A18 18 0 0 1 42 24" fill="rgba(42,157,143,0.4)"/>
+          <path d="M24 6 A18 18 0 0 0 10.5 38" fill="rgba(201,168,76,0.3)"/>
+          <path d="M10.5 38 A18 18 0 0 0 42 24" fill="rgba(201,74,42,0.25)"/>
+          <circle cx="24" cy="24" r="6" fill="var(--ink)"/>
+        </svg>
+      </div>
+      <div class="service-name">Data Analysis & Insights</div>
+      <div class="service-desc">Deep-dive analysis revealing hidden trends, patterns, and opportunities. I translate numbers into narratives that support strategy and business growth.</div>
+      <div class="service-tools">
+        <span class="tool-tag">Excel</span>
+        <span class="tool-tag">Google Sheets</span>
+        <span class="tool-tag">Pivot Tables</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="service-num">04</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="8" y="8" width="32" height="24" rx="2" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+          <rect x="14" y="14" width="10" height="10" rx="1" fill="rgba(42,157,143,0.5)"/>
+          <rect x="28" y="14" width="6" height="4" rx="1" fill="rgba(245,240,232,0.2)"/>
+          <rect x="28" y="20" width="6" height="2" rx="1" fill="rgba(245,240,232,0.1)"/>
+          <rect x="8" y="36" width="32" height="4" rx="1" fill="rgba(201,168,76,0.3)"/>
+        </svg>
+      </div>
+      <div class="service-name">Brand Visual Design</div>
+      <div class="service-desc">Compelling marketing collateral, social media graphics, presentations, and brand assets that capture attention and communicate your story with precision and style.</div>
+      <div class="service-tools">
+        <span class="tool-tag">Canva</span>
+        <span class="tool-tag">Photoshop</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">05</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M8 36 L16 24 L24 30 L32 18 L40 12" stroke="rgba(201,168,76,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="40" cy="12" r="3" fill="rgba(42,157,143,0.8)"/>
+          <path d="M6 42h36" stroke="rgba(245,240,232,0.15)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="service-name">Reporting & Automation</div>
+      <div class="service-desc">Automated report templates and recurring data pipelines that save hours of manual work each week. Monthly, weekly, or real-time — your reports, on autopilot.</div>
+      <div class="service-tools">
+        <span class="tool-tag">Excel VBA</span>
+        <span class="tool-tag">Sheets Scripts</span>
+        <span class="tool-tag">Power BI</span>
+      </div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">06</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="16" r="8" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+          <path d="M8 40 C8 32 40 32 40 40" stroke="rgba(201,168,76,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="24" cy="16" r="3" fill="rgba(42,157,143,0.6)"/>
+        </svg>
+      </div>
+      <div class="service-name">Consultation & Training</div>
+      <div class="service-desc">One-on-one sessions to upskill your team in Excel, Power BI, or Looker Studio. Or let me audit your current data systems and recommend actionable improvements.</div>
+      <div class="service-tools">
+        <span class="tool-tag">All Platforms</span>
+        <span class="tool-tag">Remote / In-Person</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="work">
+  <div class="work-header">
+    <div>
+      <div class="section-tag reveal">Selected Work</div>
+      <h2 class="section-title reveal">Projects that<br>made an <em>impact.</em></h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterWork(this,'all')">All</button>
+      <button class="filter-tab" onclick="filterWork(this,'data')">Data</button>
+      <button class="filter-tab" onclick="filterWork(this,'dashboard')">Dashboards</button>
+      <button class="filter-tab" onclick="filterWork(this,'design')">Design</button>
+    </div>
+  </div>
+
+  <div class="portfolio-grid">
+
+    <!-- Item 1 — large -->
+    <div class="port-item" data-cat="dashboard">
+      <div class="port-bg bg-1">
+        <div class="chart-decoration">
+          <svg viewBox="0 0 500 360" style="width:100%;height:100%;opacity:0.7">
+            <!-- Sales Dashboard mockup -->
+            <rect x="20" y="20" width="460" height="320" rx="4" fill="rgba(10,10,15,0.7)"/>
+            <rect x="20" y="20" width="460" height="44" rx="4" fill="rgba(26,107,107,0.6)"/>
+            <text x="40" y="48" fill="rgba(201,168,76,0.9)" font-size="14" font-weight="bold" font-family="sans-serif">SALES PERFORMANCE DASHBOARD</text>
+            <!-- KPI row -->
+            <rect x="36" y="80" width="90" height="56" rx="3" fill="rgba(42,157,143,0.2)" stroke="rgba(42,157,143,0.5)" stroke-width="1"/>
+            <text x="81" y="102" text-anchor="middle" fill="rgba(42,157,143,1)" font-size="18" font-weight="bold" font-family="sans-serif">$2.4M</text>
+            <text x="81" y="118" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="8" font-family="sans-serif">TOTAL REVENUE</text>
+            <rect x="138" y="80" width="90" height="56" rx="3" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.5)" stroke-width="1"/>
+            <text x="183" y="102" text-anchor="middle" fill="rgba(201,168,76,1)" font-size="18" font-weight="bold" font-family="sans-serif">1,284</text>
+            <text x="183" y="118" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="8" font-family="sans-serif">TOTAL ORDERS</text>
+            <rect x="240" y="80" width="90" height="56" rx="3" fill="rgba(201,74,42,0.15)" stroke="rgba(201,74,42,0.5)" stroke-width="1"/>
+            <text x="285" y="102" text-anchor="middle" fill="rgba(201,74,42,1)" font-size="18" font-weight="bold" font-family="sans-serif">↑18%</text>
+            <text x="285" y="118" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="8" font-family="sans-serif">GROWTH YOY</text>
+            <rect x="342" y="80" width="90" height="56" rx="3" fill="rgba(70,130,180,0.15)" stroke="rgba(70,130,180,0.5)" stroke-width="1"/>
+            <text x="387" y="102" text-anchor="middle" fill="rgba(100,160,220,1)" font-size="18" font-weight="bold" font-family="sans-serif">94%</text>
+            <text x="387" y="118" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="8" font-family="sans-serif">CLIENT RETENTION</text>
+            <!-- Bar chart bottom left -->
+            <text x="36" y="160" fill="rgba(245,240,232,0.4)" font-size="9" font-family="sans-serif">MONTHLY REVENUE</text>
+            <rect x="36" y="270" width="18" height="50" rx="1" fill="rgba(42,157,143,0.5)"/>
+            <rect x="60" y="255" width="18" height="65" rx="1" fill="rgba(42,157,143,0.6)"/>
+            <rect x="84" y="243" width="18" height="77" rx="1" fill="rgba(201,168,76,0.6)"/>
+            <rect x="108" y="230" width="18" height="90" rx="1" fill="rgba(42,157,143,0.7)"/>
+            <rect x="132" y="245" width="18" height="75" rx="1" fill="rgba(42,157,143,0.5)"/>
+            <rect x="156" y="218" width="18" height="102" rx="1" fill="rgba(201,168,76,0.8)"/>
+            <rect x="180" y="228" width="18" height="92" rx="1" fill="rgba(42,157,143,0.6)"/>
+            <rect x="204" y="210" width="18" height="110" rx="1" fill="rgba(201,168,76,0.7)"/>
+            <!-- Line chart bottom right -->
+            <text x="260" y="160" fill="rgba(245,240,232,0.4)" font-size="9" font-family="sans-serif">TREND ANALYSIS</text>
+            <polyline points="260,310 290,285 320,295 350,268 380,275 410,252 440,262 460,240" fill="none" stroke="rgba(201,168,76,0.8)" stroke-width="2"/>
+            <polygon points="260,310 290,285 320,295 350,268 380,275 410,252 440,262 460,240 460,320 260,320" fill="rgba(201,168,76,0.1)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-label">Power BI · Dashboard</div>
+        <div class="port-title">Sales Performance Dashboard</div>
+        <div class="port-desc">End-to-end dashboard for an e-commerce client tracking $2.4M revenue, order trends, and YoY growth across 12 product categories.</div>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="port-item" data-cat="data">
+      <div class="port-bg bg-2">
+        <div class="chart-decoration">
+          <svg viewBox="0 0 300 240" style="width:100%;height:100%;opacity:0.75">
+            <rect x="10" y="10" width="280" height="220" rx="3" fill="rgba(10,10,15,0.7)"/>
+            <rect x="10" y="10" width="280" height="32" rx="3" fill="rgba(201,74,42,0.4)"/>
+            <text x="20" y="31" fill="rgba(245,240,232,0.8)" font-size="11" font-weight="bold" font-family="sans-serif">DATA CLEANING REPORT</text>
+            <rect x="20" y="54" width="260" height="16" rx="2" fill="rgba(245,240,232,0.04)"/>
+            <rect x="20" y="54" width="190" height="16" rx="2" fill="rgba(201,74,42,0.25)"/>
+            <text x="25" y="66" fill="rgba(245,240,232,0.6)" font-size="8" font-family="monospace">Duplicates removed: 1,204</text>
+            <rect x="20" y="76" width="260" height="16" rx="2" fill="rgba(245,240,232,0.04)"/>
+            <rect x="20" y="76" width="230" height="16" rx="2" fill="rgba(42,157,143,0.2)"/>
+            <text x="25" y="88" fill="rgba(245,240,232,0.6)" font-size="8" font-family="monospace">Nulls filled: 847 cells</text>
+            <rect x="20" y="98" width="260" height="16" rx="2" fill="rgba(245,240,232,0.04)"/>
+            <rect x="20" y="98" width="120" height="16" rx="2" fill="rgba(201,168,76,0.2)"/>
+            <text x="25" y="110" fill="rgba(245,240,232,0.6)" font-size="8" font-family="monospace">Format standardized: 5 cols</text>
+            <circle cx="150" cy="176" r="50" fill="none" stroke="rgba(245,240,232,0.1)" stroke-width="12"/>
+            <circle cx="150" cy="176" r="50" fill="none" stroke="rgba(42,157,143,0.7)" stroke-width="12" stroke-dasharray="188 127" stroke-dashoffset="-15" stroke-linecap="round"/>
+            <circle cx="150" cy="176" r="50" fill="none" stroke="rgba(201,168,76,0.6)" stroke-width="12" stroke-dasharray="62 253" stroke-dashoffset="-203" stroke-linecap="round"/>
+            <text x="150" y="172" text-anchor="middle" fill="rgba(245,240,232,0.9)" font-size="18" font-weight="bold" font-family="sans-serif">98%</text>
+            <text x="150" y="186" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="7" font-family="sans-serif">DATA QUALITY</text>
+          </svg>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-label">Excel · Data Cleaning</div>
+        <div class="port-title">Retail Data Overhaul</div>
+        <div class="port-desc">Cleaned 45,000+ rows for a retail chain — removed duplicates, standardized formats, and achieved 98% data quality score.</div>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="port-item" data-cat="design">
+      <div class="port-bg bg-3">
+        <div class="chart-decoration">
+          <svg viewBox="0 0 300 240" style="width:100%;height:100%;opacity:0.8">
+            <!-- Brand design mockup -->
+            <rect x="20" y="20" width="120" height="80" rx="4" fill="rgba(74,18,114,0.6)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+            <circle cx="80" cy="55" r="20" fill="rgba(201,168,76,0.3)" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+            <text x="80" y="60" text-anchor="middle" fill="rgba(201,168,76,0.9)" font-size="12" font-weight="bold" font-family="sans-serif">BRAND</text>
+            <rect x="20" y="115" width="120" height="30" rx="3" fill="rgba(201,168,76,0.7)"/>
+            <text x="80" y="135" text-anchor="middle" fill="rgba(10,10,15,0.9)" font-size="10" font-weight="bold" font-family="sans-serif">DISCOVER MORE</text>
+            <rect x="160" y="20" width="120" height="195" rx="4" fill="rgba(10,10,15,0.7)" stroke="rgba(74,18,114,0.4)" stroke-width="1"/>
+            <rect x="170" y="30" width="100" height="60" rx="3" fill="rgba(74,18,114,0.5)"/>
+            <rect x="170" y="100" width="60" height="6" rx="3" fill="rgba(245,240,232,0.5)"/>
+            <rect x="170" y="112" width="100" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+            <rect x="170" y="120" width="85" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+            <rect x="170" y="128" width="95" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+            <rect x="170" y="148" width="100" height="55" rx="3" fill="rgba(201,74,42,0.25)"/>
+            <rect x="175" y="212" width="40" height="14" rx="2" fill="rgba(201,168,76,0.6)"/>
+            <!-- Color palette strip -->
+            <rect x="20" y="180" width="24" height="40" rx="2" fill="#1a6b6b"/>
+            <rect x="50" y="180" width="24" height="40" rx="2" fill="#c9a84c"/>
+            <rect x="80" y="180" width="24" height="40" rx="2" fill="#4a1272"/>
+            <rect x="110" y="180" width="24" height="40" rx="2" fill="#c94a2a"/>
+          </svg>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-label">Canva · Photoshop</div>
+        <div class="port-title">Brand Identity Suite</div>
+        <div class="port-desc">Complete visual identity for a tech startup — logo, color palette, typography system, and marketing templates.</div>
+      </div>
+    </div>
+
+    <!-- Item 4 — tall -->
+    <div class="port-item" data-cat="dashboard">
+      <div class="port-bg bg-4">
+        <div class="chart-decoration">
+          <svg viewBox="0 0 280 480" style="width:100%;height:100%;opacity:0.75">
+            <rect x="10" y="10" width="260" height="460" rx="4" fill="rgba(10,10,15,0.7)"/>
+            <rect x="10" y="10" width="260" height="40" rx="4" fill="rgba(26,58,92,0.8)"/>
+            <text x="20" y="35" fill="rgba(201,168,76,0.9)" font-size="12" font-weight="bold" font-family="sans-serif">LOOKER STUDIO</text>
+            <!-- Geo map sim -->
+            <ellipse cx="140" cy="180" rx="110" ry="90" fill="rgba(26,58,92,0.4)" stroke="rgba(42,157,143,0.3)" stroke-width="1"/>
+            <circle cx="100" cy="160" r="8" fill="rgba(201,168,76,0.7)" opacity="0.8"/>
+            <circle cx="140" cy="150" r="14" fill="rgba(42,157,143,0.7)" opacity="0.8"/>
+            <circle cx="175" cy="170" r="6" fill="rgba(201,74,42,0.7)" opacity="0.8"/>
+            <circle cx="120" cy="200" r="10" fill="rgba(100,160,220,0.7)" opacity="0.8"/>
+            <circle cx="160" cy="195" r="5" fill="rgba(201,168,76,0.6)" opacity="0.7"/>
+            <circle cx="180" cy="140" r="12" fill="rgba(42,157,143,0.6)" opacity="0.7"/>
+            <!-- Legend -->
+            <circle cx="30" cy="295" r="5" fill="rgba(42,157,143,0.8)"/>
+            <text x="42" y="299" fill="rgba(245,240,232,0.5)" font-size="8" font-family="sans-serif">High ($500K+)</text>
+            <circle cx="30" cy="315" r="5" fill="rgba(201,168,76,0.8)"/>
+            <text x="42" y="319" fill="rgba(245,240,232,0.5)" font-size="8" font-family="sans-serif">Mid ($200K–500K)</text>
+            <circle cx="30" cy="335" r="5" fill="rgba(201,74,42,0.8)"/>
+            <text x="42" y="339" fill="rgba(245,240,232,0.5)" font-size="8" font-family="sans-serif">Low (&lt;$200K)</text>
+            <!-- Table -->
+            <rect x="20" y="360" width="240" height="18" rx="1" fill="rgba(42,157,143,0.25)"/>
+            <text x="28" y="373" fill="rgba(245,240,232,0.6)" font-size="8" font-family="monospace">REGION     SALES    SHARE</text>
+            <rect x="20" y="378" width="240" height="16" rx="1" fill="rgba(245,240,232,0.03)"/>
+            <text x="28" y="390" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">NORTH      $542K   32.4%</text>
+            <rect x="20" y="394" width="240" height="16" rx="1" fill="rgba(245,240,232,0.03)"/>
+            <text x="28" y="406" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">SOUTH      $398K   23.8%</text>
+            <rect x="20" y="410" width="240" height="16" rx="1" fill="rgba(245,240,232,0.03)"/>
+            <text x="28" y="422" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">EAST       $471K   28.1%</text>
+            <rect x="20" y="426" width="240" height="16" rx="1" fill="rgba(245,240,232,0.03)"/>
+            <text x="28" y="438" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">WEST       $263K   15.7%</text>
+          </svg>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-label">Looker Studio · Analytics</div>
+        <div class="port-title">Regional Sales Intelligence</div>
+        <div class="port-desc">Geo-mapped Looker Studio dashboard tracking regional performance for a logistics company across 4 territories and $1.67M in annual sales.</div>
+      </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="port-item" data-cat="data">
+      <div class="port-bg bg-5">
+        <div class="chart-decoration">
+          <svg viewBox="0 0 280 240" style="width:100%;height:100%;opacity:0.8">
+            <rect x="10" y="10" width="260" height="220" rx="3" fill="rgba(10,10,15,0.75)"/>
+            <text x="20" y="35" fill="rgba(90,156,26,0.9)" font-size="11" font-weight="bold" font-family="sans-serif">GOOGLE SHEETS — AUTOMATED REPORT</text>
+            <!-- Spreadsheet rows -->
+            <rect x="10" y="40" width="260" height="18" rx="0" fill="rgba(42,92,10,0.4)"/>
+            <text x="18" y="53" fill="rgba(245,240,232,0.7)" font-size="8" font-family="monospace">  A          B       C       D</text>
+            <rect x="10" y="58" width="260" height="16" rx="0" fill="rgba(245,240,232,0.02)"/>
+            <text x="18" y="70" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">1 Month      Leads   Conv.   Rev.</text>
+            <rect x="10" y="74" width="260" height="16" rx="0" fill="rgba(245,240,232,0.04)"/>
+            <text x="18" y="86" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">2 Jan 2024   284     12%     $32K</text>
+            <rect x="10" y="90" width="260" height="16" rx="0" fill="rgba(245,240,232,0.02)"/>
+            <text x="18" y="102" fill="rgba(245,240,232,0.5)" font-size="8" font-family="monospace">3 Feb 2024   319     14%     $41K</text>
+            <rect x="10" y="106" width="260" height="16" rx="0" fill="rgba(90,156,26,0.12)"/>
+            <text x="18" y="118" fill="rgba(90,156,26,0.9)" font-size="8" font-family="monospace">4 Mar 2024   402     18%     $68K  ↑</text>
+            <!-- Chart area -->
+            <rect x="18" y="134" width="244" height="82" rx="2" fill="rgba(245,240,232,0.02)" stroke="rgba(245,240,232,0.06)" stroke-width="1"/>
+            <polyline points="28,208 60,190 92,195 124,172 156,180 188,158 220,165 252,142" fill="none" stroke="rgba(90,156,26,0.8)" stroke-width="2"/>
+            <polygon points="28,208 60,190 92,195 124,172 156,180 188,158 220,165 252,142 252,216 28,216" fill="rgba(90,156,26,0.1)"/>
+            <circle cx="252" cy="142" r="4" fill="rgba(201,168,76,0.9)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-label">Google Sheets · Automation</div>
+        <div class="port-title">Lead Tracking Automation</div>
+        <div class="port-desc">Automated monthly reporting system for a marketing agency — auto-calculates conversion rates, revenue, and sends weekly digests.</div>
+      </div>
+    </div>
+
+    <!-- Item 6 -->
+    <div class="port-item" data-cat="design">
+      <div class="port-bg bg-6">
+        <div class="chart-decoration">
+          <svg viewBox="0 0 280 240" style="width:100%;height:100%;opacity:0.8">
+            <!-- Social media design pack -->
+            <rect x="15" y="15" width="115" height="115" rx="6" fill="rgba(201,74,42,0.3)" stroke="rgba(201,74,42,0.4)" stroke-width="1"/>
+            <circle cx="72" cy="60" r="22" fill="rgba(201,168,76,0.4)" stroke="rgba(201,168,76,0.6)" stroke-width="1.5"/>
+            <text x="72" y="65" text-anchor="middle" fill="rgba(245,240,232,0.9)" font-size="10" font-weight="bold" font-family="sans-serif">LOGO</text>
+            <rect x="20" y="96" width="105" height="6" rx="3" fill="rgba(245,240,232,0.4)"/>
+            <rect x="20" y="108" width="75" height="4" rx="2" fill="rgba(245,240,232,0.2)"/>
+            <rect x="148" y="15" width="116" height="55" rx="4" fill="rgba(107,26,10,0.5)" stroke="rgba(201,74,42,0.3)" stroke-width="1"/>
+            <text x="206" y="38" text-anchor="middle" fill="rgba(201,168,76,0.8)" font-size="9" font-family="sans-serif">FACEBOOK COVER</text>
+            <text x="206" y="52" text-anchor="middle" fill="rgba(245,240,232,0.4)" font-size="7" font-family="sans-serif">820 × 312 px</text>
+            <rect x="148" y="80" width="55" height="55" rx="4" fill="rgba(107,26,10,0.5)" stroke="rgba(201,74,42,0.3)" stroke-width="1"/>
+            <text x="175" y="112" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7" font-family="sans-serif">INSTAGRAM</text>
+            <rect x="210" y="80" width="54" height="55" rx="4" fill="rgba(201,168,76,0.2)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+            <text x="237" y="112" text-anchor="middle" fill="rgba(201,168,76,0.7)" font-size="7" font-family="sans-serif">STORY</text>
+            <!-- Bottom mockup cards -->
+            <rect x="15" y="148" width="249" height="76" rx="4" fill="rgba(107,26,10,0.4)" stroke="rgba(201,74,42,0.2)" stroke-width="1"/>
+            <rect x="24" y="158" width="50" height="50" rx="3" fill="rgba(201,74,42,0.4)"/>
+            <rect x="84" y="160" width="80" height="6" rx="3" fill="rgba(245,240,232,0.5)"/>
+            <rect x="84" y="172" width="120" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+            <rect x="84" y="180" width="100" height="3" rx="1.5" fill="rgba(245,240,232,0.15)"/>
+            <rect x="84" y="192" width="40" height="14" rx="2" fill="rgba(201,168,76,0.6)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-label">Canva · Social Media</div>
+        <div class="port-title">Social Media Design Pack</div>
+        <div class="port-desc">Complete 18-piece social media kit for a restaurant brand — posts, stories, covers, and highlight icons with consistent visual language.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-tag reveal">How I Work</div>
+  <h2 class="section-title reveal">A process built for<br><em>precision</em> and clarity.</h2>
+
+  <div class="process-layout">
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Discovery & Brief</div>
+          <div class="step-desc">I start with a focused consultation to understand your data, goals, audience, and deadlines. The clearer the brief, the more precise the outcome.</div>
+        </div>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Audit & Assessment</div>
+          <div class="step-desc">I examine your existing data or assets, identify issues, and outline the full scope of work — no hidden costs or surprise revisions.</div>
+        </div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Execution</div>
+          <div class="step-desc">Precise, meticulous delivery using the right tools for the job. I work fast without sacrificing accuracy — most projects delivered within 24–48 hours.</div>
+        </div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Review & Refinement</div>
+          <div class="step-desc">You review the deliverable and I refine until it's exactly right. Revisions are part of the process, not an afterthought.</div>
+        </div>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-title">Handoff & Support</div>
+          <div class="step-desc">Clean file handoff with clear documentation. I'm available for questions after delivery — your success is my long-term priority.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-visual reveal">
+      <div class="section-tag" style="margin-bottom:28px;">Core Competencies</div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div class="skill-bar-row">
+          <div class="skill-name">Excel / Google Sheets <span>Expert</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:97%"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-name">Power BI <span>Advanced</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:92%;animation-delay:0.15s"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-name">Looker Studio <span>Advanced</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:90%;animation-delay:0.25s"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-name">Canva <span>Expert</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:96%;animation-delay:0.35s"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-name">Photoshop <span>Proficient</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:82%;animation-delay:0.45s"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-name">Data Storytelling <span>Expert</span></div>
+          <div class="skill-track"><div class="skill-fill" style="width:95%;animation-delay:0.55s"></div></div>
+        </div>
+      </div>
+
+      <div style="margin-top:36px;padding-top:28px;border-top:1px solid rgba(245,240,232,0.08);">
+        <div class="section-tag" style="margin-bottom:16px;">Typical Timeline</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:rgba(245,240,232,0.5);">Data Cleaning (standard)</span>
+            <span style="font-size:12px;color:var(--gold);font-weight:500;">24–48 hrs</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:rgba(245,240,232,0.5);">Dashboard Build</span>
+            <span style="font-size:12px;color:var(--gold);font-weight:500;">2–4 days</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:rgba(245,240,232,0.5);">Brand Design Pack</span>
+            <span style="font-size:12px;color:var(--gold);font-weight:500;">3–5 days</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:rgba(245,240,232,0.5);">Full Analytics Setup</span>
+            <span style="font-size:12px;color:var(--gold);font-weight:500;">1–2 weeks</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-tag reveal">Client Voices</div>
+  <h2 class="section-title reveal">Trusted by businesses<br>that value <em>results.</em></h2>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-quote">"</div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">The dashboard completely changed how our leadership team makes decisions. Data we used to spend hours digging through is now front-and-center every Monday morning.</div>
+      <div class="testi-client">
+        <div class="client-avatar" style="background:var(--teal-light);">SC</div>
+        <div>
+          <div class="client-name">Sarah Chen</div>
+          <div class="client-role">COO · Retail Group</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-quote">"</div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">Our spreadsheet was a disaster — 50,000 rows of chaos. Within 48 hours it was clean, structured, and analysis-ready. Absolutely exceptional work and communication.</div>
+      <div class="testi-client">
+        <div class="client-avatar" style="background:var(--gold);">MR</div>
+        <div>
+          <div class="client-name">Marcus Reid</div>
+          <div class="client-role">Founder · E-commerce Brand</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-quote">"</div>
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">The brand design kit was stunning. Every asset was perfectly on-brand and delivered ahead of schedule. We've used the templates for 6 months and still get compliments.</div>
+      <div class="testi-client">
+        <div class="client-avatar" style="background:var(--rust);">AL</div>
+        <div>
+          <div class="client-name">Amira Laila</div>
+          <div class="client-role">Marketing Lead · SaaS Startup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-info">
+      <div class="section-tag reveal">Get In Touch</div>
+      <h2 class="section-title reveal">Ready to turn your<br>data into <em>gold?</em></h2>
+      <p class="contact-desc reveal">
+        Whether you have a mountain of messy data, need a stunning dashboard, or want to elevate your brand visuals — I'd love to hear from you. Fast response, clear communication, real results.
+      </p>
+      <div class="contact-links reveal">
+        <a href="mailto:hello@yourdomain.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          Satyamnishad25624@gmail.com
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          www.linkedin.com/in/satyam-nishad
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-link-icon">⬡</div>
+          Upwork · Top Rated
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-link-icon">◈</div>
+          Fiverr · Level 2 Seller
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="Jane Smith">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="jane@company.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Service Needed</label>
+        <select class="form-input" style="cursor:none;-webkit-appearance:none;">
+          <option value="" style="background:#0a0a0f;">Select a service…</option>
+          <option style="background:#0a0a0f;">Data Cleaning & Structuring</option>
+          <option style="background:#0a0a0f;">Interactive Dashboard</option>
+          <option style="background:#0a0a0f;">Data Analysis & Insights</option>
+          <option style="background:#0a0a0f;">Brand Visual Design</option>
+          <option style="background:#0a0a0f;">Reporting & Automation</option>
+          <option style="background:#0a0a0f;">Consultation & Training</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Project Details</label>
+        <textarea class="form-textarea" placeholder="Tell me about your data, what you need, and your timeline…"></textarea>
+      </div>
+      <button class="btn-primary" onclick="handleSubmit()" style="width:100%;padding:16px;font-size:13px;">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DATADESIGN&nbsp;&nbsp;/&nbsp;&nbsp;PRO</div>
+  <div class="footer-copy">© 2025 — Data & Design Specialist. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#home">Top</a>
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.transform = `translate(${e.clientX - 6}px, ${e.clientY - 6}px)`;
+    ring.style.transform = `translate(${e.clientX - 18}px, ${e.clientY - 18}px)`;
+  });
+  document.querySelectorAll('a,button,.port-item,.service-card,.testi-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.style.transform += ' scale(2)');
+    el.addEventListener('mouseleave', () => {});
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Portfolio filter
+  function filterWork(btn, cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.port-item').forEach(item => {
+      if (cat === 'all' || item.dataset.cat === cat) {
+        item.style.opacity = '1';
+        item.style.transform = 'scale(1)';
+      } else {
+        item.style.opacity = '0.15';
+        item.style.transform = 'scale(0.97)';
+      }
+      item.style.transition = 'opacity 0.4s, transform 0.4s';
+    });
+  }
+
+  // Form submit
+  function handleSubmit() {
+    const btn = document.querySelector('#contact .btn-primary');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = 'var(--teal-light)';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = 'var(--gold)';
+    }, 3000);
+  }
+
+  // Animate stat numbers
+  function animateCount(el, target, suffix='') {
+    let start = 0;
+    const isFloat = target % 1 !== 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = isFloat ? start.toFixed(1) + suffix : Math.floor(start) + suffix;
+    }, 16);
+  }
+</script>
+</body>
+</html>
